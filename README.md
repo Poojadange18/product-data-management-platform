@@ -50,6 +50,39 @@ go vet ./...
 go build ./...
 ```
 
+## 📸 Screenshots
+
+### Dashboard
+
+Overview of the product inventory with total products, total stock, inventory value, and low-stock indicators.
+
+![Dashboard](screenshots/Dashboard.png)
+
+### Product Management
+
+Manage products with CRUD operations including adding, editing, and deleting products.
+
+![Products Section](screenshots/Products_section.png)
+
+### Add New Product
+
+Add products by entering product details such as product ID, name, category, price, and stock.
+
+![Add New Product](screenshots/Add_new_product.png)
+
+### Analytics
+
+View product and inventory analytics through an interactive dashboard.
+
+![Analytics](screenshots/Analytics.png)
+
+### Authentication
+
+Secure user registration and login using JWT-based authentication.
+
+![Login Page](screenshots/Login_page.png)
+
+
 ## Deployment
 
 Deploy the Docker image to Render, Railway, or Fly.io with a managed PostgreSQL instance. Configure `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_SSLMODE=require`, `JWT_SECRET`, `SERVER_PORT`, and `CORS_ALLOWED_ORIGIN` in the platform environment settings; run the migration against the managed database before serving traffic.
