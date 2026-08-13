@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info: { title: ProductHub API, version: 2.0.0 }
+servers: [{ url: http://localhost:8080 }]
+components:
+  securitySchemes: { bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT } }
+  schemas:
+    Product: { type: object, required: [id,name,category,price,stock], properties: { id: {type: integer, minimum: 1}, name: {type: string}, category: {type: string}, price: {type: number, minimum: 0}, stock: {type: integer, minimum: 0} } }
+    Credentials: { type: object, required: [email,password], properties: { email: {type: string, format: email}, password: {type: string, minLength: 8} } }
+paths:
+  /health: { get: { summary: Health check, responses: { '200': {description: OK} } } }
+  /auth/register: { post: { summary: Register, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/Credentials'}}}}, responses: {'201': {description: Created}, '400': {description: Invalid input}, '409': {description: Email exists}} } }
+  /auth/login: { post: { summary: Login, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/Credentials'}}}}, responses: {'200': {description: JWT token}, '401': {description: Invalid credentials}} } }
+  /products:
+    get: { security: [{bearerAuth: []}], summary: List products, parameters: [{name: page,in: query,schema:{type:integer}},{name: limit,in: query,schema:{type:integer}},{name: search,in: query,schema:{type:string}},{name: category,in: query,schema:{type:string}},{name: stock,in: query,schema:{type:string,enum:[in-stock,low-stock,out-of-stock]}},{name: sort,in: query,schema:{type:string,enum:[id,name,price,stock]}},{name: order,in: query,schema:{type:string,enum:[asc,desc]}}], responses: {'200': {description: Paginated products}, '401': {description: Unauthorized}} }
+    post: { security: [{bearerAuth: []}], summary: Create product, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/Product'}}}}, responses: {'201': {description: Created}, '400': {description: Invalid input}, '409': {description: Duplicate ID}} }
+  /products/{id}:
+    parameters: [{name: id,in: path,required: true,schema:{type:integer}}]
+    get: {security: [{bearerAuth: []}], summary: Get product, responses: {'200': {description: Product}, '404': {description: Not found}}}
+    put: {security: [{bearerAuth: []}], summary: Update product, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/Product'}}}}, responses: {'200': {description: Updated}, '404': {description: Not found}}}
+    delete: {security: [{bearerAuth: []}], summary: Delete product, responses: {'200': {description: Deleted}, '404': {description: Not found}}}

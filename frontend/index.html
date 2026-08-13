@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>ProductHub - Product Management</title>
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">P</div>
+        <div>
+            <h2>ProductHub</h2>
+            <span>Management Platform</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <a href="#" class="nav-item active" data-section="dashboard">
+            <span>▦</span>
+            Dashboard
+        </a>
+
+        <a href="#" class="nav-item" data-section="products">
+            <span>▤</span>
+            Products
+        </a>
+
+        <a href="#" class="nav-item" data-section="analytics">
+            <span>◈</span>
+            Analytics
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">Log out</button>
+        <span>ProductHub v2.0</span>
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-content">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">
+                Overview of your product inventory
+            </p>
+        </div>
+
+    </header>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboardSection" class="page-section active">
+
+        <!-- STAT CARDS -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">▦</div>
+                <div>
+                    <p>Total Products</p>
+                    <h2 id="totalProducts">0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">▤</div>
+                <div>
+                    <p>Total Stock</p>
+                    <h2 id="totalStock">0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">₹</div>
+                <div>
+                    <p>Inventory Value</p>
+                    <h2 id="inventoryValue">₹0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">!</div>
+                <div>
+                    <p>Low Stock</p>
+                    <h2 id="lowStock">0</h2>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- DASHBOARD PRODUCTS -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Products</h2>
+                    <p>Manage your product inventory</p>
+                </div>
+
+                <button
+                    id="dashboardAddProductBtn"
+                    class="primary-btn"
+                    type="button"
+                    onclick="openAddModal()">
+                    + Add Product
+                </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PRODUCT</th>
+                        <th>CATEGORY</th>
+                        <th>PRICE</th>
+                        <th>STOCK</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="dashboardProductTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PRODUCTS ================= -->
+
+    <section id="productsSection" class="page-section">
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Product Management</h2>
+                    <p>Search, filter and manage products</p>
+                </div>
+
+                <button
+                    id="productsAddProductBtn"
+                    class="primary-btn"
+                    type="button"
+                    onclick="openAddModal()">
+                    + Add Product
+                </button>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="filters">
+
+                <div class="search-box">
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search products..."
+                    >
+                </div>
+
+
+                <select id="categoryFilter">
+                    <option value="all">
+                        All Categories
+                    </option>
+                </select>
+
+
+                <select id="stockFilter">
+                    <option value="all">
+                        All Stock
+                    </option>
+
+                    <option value="in-stock">
+                        In Stock
+                    </option>
+
+                    <option value="low-stock">
+                        Low Stock
+                    </option>
+
+                    <option value="out-of-stock">
+                        Out of Stock
+                    </option>
+                </select>
+
+
+                <select id="sortFilter">
+
+                    <option value="default">
+                        Sort By
+                    </option>
+
+                    <option value="name-asc">
+                        Name A-Z
+                    </option>
+
+                    <option value="name-desc">
+                        Name Z-A
+                    </option>
+
+                    <option value="price-low">
+                        Price Low-High
+                    </option>
+
+                    <option value="price-high">
+                        Price High-Low
+                    </option>
+
+                    <option value="stock-low">
+                        Stock Low-High
+                    </option>
+
+                    <option value="stock-high">
+                        Stock High-Low
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PRODUCT</th>
+                        <th>CATEGORY</th>
+                        <th>PRICE</th>
+                        <th>STOCK</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="productTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div id="pagination" class="pagination"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ANALYTICS ================= -->
+
+    <section id="analyticsSection" class="page-section">
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">▦</div>
+
+                <div>
+                    <p>Products</p>
+                    <h2 id="analyticsProducts">0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">▤</div>
+
+                <div>
+                    <p>Stock Units</p>
+                    <h2 id="analyticsStock">0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">₹</div>
+
+                <div>
+                    <p>Inventory Value</p>
+                    <h2 id="analyticsValue">₹0</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">!</div>
+
+                <div>
+                    <p>Low Stock</p>
+                    <h2 id="analyticsLowStock">0</h2>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="analytics-grid">
+
+            <!-- CATEGORY ANALYTICS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Category Overview</h2>
+                        <p>Products grouped by category</p>
+                    </div>
+
+                </div>
+
+                <div id="categoryAnalytics"
+                     class="analytics-list">
+                </div>
+
+            </div>
+
+
+            <!-- STOCK ANALYTICS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Inventory Health</h2>
+                        <p>Current stock status</p>
+                    </div>
+
+                </div>
+
+                <div class="health-container">
+
+                    <div class="health-row">
+
+                        <div>
+                            <span>Healthy Stock</span>
+                        </div>
+
+                        <strong id="healthyStockCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <div
+                            id="healthyProgress"
+                            class="progress green-progress">
+                        </div>
+                    </div>
+
+
+                    <div class="health-row">
+
+                        <div>
+                            <span>Low Stock</span>
+                        </div>
+
+                        <strong id="lowStockCountAnalytics">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <div
+                            id="lowProgress"
+                            class="progress red-progress">
+                        </div>
+                    </div>
+
+
+                    <div class="health-row">
+
+                        <div>
+                            <span>Out of Stock</span>
+                        </div>
+
+                        <strong id="outStockCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <div
+                            id="outProgress"
+                            class="progress gray-progress">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+</div>
+
+<!-- ================= ADD PRODUCT MODAL ================= -->
+
+<div id="productModal" class="modal">
+
+
+<div class="modal-content">
+
+    <div class="modal-header">
+
+        <div>
+            <h2>Add Product</h2>
+            <p>Create a new product</p>
+        </div>
+
+        <button
+            id="closeModalBtn"
+            class="modal-close">
+            &times;
+        </button>
+
+    </div>
+
+
+    <form id="productForm">
+
+        <div class="form-group">
+            <label>Product ID</label>
+            <input type="number" id="productId" min="1" step="1" placeholder="e.g. 1001" required>
+        </div>
+
+        <div class="form-group">
+
+            <label>Product Name</label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="e.g. MacBook Air"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Category</label>
+
+            <input
+                type="text"
+                id="productCategory"
+                placeholder="e.g. Laptop"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>Price</label>
+
+                <input
+                    type="number"
+                    id="productPrice"
+                    min="0"
+                    step="0.01"
+                    placeholder="89999"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Stock</label>
+
+                <input
+                    type="number"
+                    id="productStock"
+                    min="0"
+                    placeholder="10"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelBtn"
+                class="secondary-btn">
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="primary-btn"
+                onclick="createProduct()">
+                Add Product
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+</div>
+
+<!-- ================= EDIT PRODUCT MODAL ================= -->
+
+<div id="editProductModal" class="modal">
+
+
+<div class="modal-content">
+
+    <div class="modal-header">
+
+        <div>
+            <h2>Edit Product</h2>
+            <p>Update product information</p>
+        </div>
+
+        <button
+            id="closeEditModalBtn"
+            class="modal-close">
+            &times;
+        </button>
+
+    </div>
+
+
+    <form id="editProductForm">
+
+        <input
+            type="hidden"
+            id="editProductId"
+        >
+
+
+        <div class="form-group">
+
+            <label>Product Name</label>
+
+            <input
+                type="text"
+                id="editProductName"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Category</label>
+
+            <input
+                type="text"
+                id="editProductCategory"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>Price</label>
+
+                <input
+                    type="number"
+                    id="editProductPrice"
+                    min="0"
+                    step="0.01"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Stock</label>
+
+                <input
+                    type="number"
+                    id="editProductStock"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelEditBtn"
+                class="secondary-btn">
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                class="primary-btn">
+                Save Changes
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+</div>
+
+<!-- Toast -->
+
+<div id="toast" class="toast"></div>
+
+<script src="/assets/script.js"></script>
+
+</body>
+
+</html>
